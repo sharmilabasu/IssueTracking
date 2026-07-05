@@ -1,0 +1,19 @@
+Below are a few quick clarifying questions before I generate the full specification. Please answer the numbered items you can; the more detail, the closer the spec will match your needs.
+
+1.Confirm .NET target: do you want a specific runtime (e.g., .NET 6, .NET 7, .NET 8)? A: .Net 6
+2.Exact CSV path and filename pattern: do you mean inbound and are files named consistently (e.g., issues_YYYYMMDD.csv)?A: Yes 
+3.Can the path be a network share (UNC) requiring credentials? A: Path like E:\Sharmila\ProjectsCode\IssueTrackingSystem
+4. Does each CSV include a header row? A: Yes Please paste a sample row (or 2) if available.
+Column list / order: you wrote "Unit # Priority" — should that be two separate columns (UnitNumber, Priority)? A: Yes
+5. Confirm exact column names and ordering: Issue ID, Unit #, Priority, Category, Notes, Open Date, Closed Date, Assign To, Assign Date, Opened By, Status, Transaction Specialist. A: Yes
+6. Date formats used in CSV (e.g., yyyy-MM-dd, MM/dd/yyyy, with time)? A:MM/dd/yyyy
+7.Duplicate handling: if an Issue ID already exists in the DB, should we update the record, skip, or insert duplicate rows? A:update
+Status and Priority canonical values: any enumerations or mappings I should include? A:yes
+Transaction volume: approx. how many rows per daily file (for sizing & performance)?A: 10000
+Scheduling: what time should the daily job run, and should there be a retry/backoff policy on failure? A: daily 2.00 AM and there should be retry policy
+Error notifications: should errors be emailed, logged to Windows Event Log, stored in DB, or integrated with another system? A: email and Db
+SQL Server details: do you have connection details and authentication preference (SQL auth or integrated Windows auth)? A: data source=DESKTOP-GU2U5PG\SQLEXPRESS;initial catalog=EmployeesDB;integrated security=True;encrypt=False;MultipleActiveResultSets=True;App=EntityFramework
+
+Should the service run under a specific service account? A: no
+Retention/archive: after successful ingest, should inbound files be moved to an archive folder, deleted, or kept? A: Archive
+Any SLA for processing time or business rules (e.g., ignore rows with missing Issue ID)? NO
